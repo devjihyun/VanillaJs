@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>basic :: jQuery example</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,700">
+<!-- 100 / 300 / 400 / 500 / 700 / 900 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css">
+<link rel="stylesheet" href="css/reset.css">
+<style>
+body {
+	font-family: "Roboto", "Noto Sans KR", sans-serif;
+	font-size: 1em;
+	font-weight: 400;
+}
+
+/* header */
+#header {
+	height: 900px;
+	overflow: hidden;
+	background-color: #bbdaff;
+}
+#header > div {
+	margin: 50px 20px;
+	padding: 10px;
+	float: left;
+	width: 300px;
+	height: 300px;
+	font-size: 14px;
+	border: 1px solid #000;
+	opacity: 0;
+	box-sizing: border-box;
+	transform: translateY(100px);
+	transition: all 0.4s;
+}
+#header.active > div {
+	transform: translateY(0);
+	opacity: 1;
+}
+#header .type1 {
+	transition-delay: 0;
+}
+#header .type2 {
+	transition-delay: 0.5s;
+}
+#header .type3 {
+	transition-delay: 1s;
+}
+
+/* page1 */
+#page1 {
+	height: 900px;
+	overflow: hidden;
+	background-color: #cafeb8;
+}
+#page1 > div {
+	margin: 50px 20px;
+	padding: 10px;
+	float: left;
+	width: 300px;
+	height: 300px;
+	font-size: 14px;
+	border: 1px solid #000;
+	opacity: 0;
+	box-sizing: border-box;
+	transform: translateY(100px);
+	transition: all 0.4s;
+}
+#page1.active > div {
+	transform: translateY(0);
+	opacity: 1;
+}
+#page1 .type1 {
+	transition-delay: 0;
+}
+#page1 .type2 {
+	transition-delay: 0.5s;
+}
+#page1 .type3 {
+	transition-delay: 1s;
+}
+
+/* page2 */
+#page2 {
+	height: 900px;
+	overflow: hidden;
+	background-color: #ffe099;
+}
+#page2 > div {
+	margin: 50px 20px;
+	padding: 10px;
+	float: left;
+	width: 300px;
+	height: 300px;
+	font-size: 14px;
+	border: 1px solid #000;
+	opacity: 0;
+	box-sizing: border-box;
+	transform: translateY(100px);
+	transition: all 0.4s;
+}
+#page2.active > div {
+	opacity: 1;
+	transform: translateY(0);
+}
+#page2 .type1 {
+	transition-delay: 0;
+}
+#page2 .type2 {
+	transition-delay: 0.5s;
+}
+#page2 .type3 {
+	transition-delay: 1s;
+}
+</style>
+<script>
+window.addEventListener("load", function(){
+	var t=window.pageXOffset;
+	// console.log("t :", t);
+	var targetY=0; // 윈도우의 위치 이동 정보 변수
+	var wrapper=document.querySelector(".wrapper");
+	var contents=wrapper.children;
+	var offsetY=new Array(); // 카테고리의 높이 정보 배열
+	var n=0; // 카테고리의 위치 번호 변수(0, 1, 2, 3)
+	var firstFlag=false; // 처음 동작인지를 확인하는 변수
+
+	for(var i=0; i<contents.length; i++){
+		offsetY.push(contents[i].offsetTop);
+	}
+	// console.log("offsetY: ", offsetY); //0, 900, 1800
+	
+	var firstTimer=setInterval(function(){
+		if(Math.abs(t-targetY) > 10){
+			t-=10;
+		}
+		else{
+			firstFlag=true;
+			t=targetY; // 윈도우의 초기 좌표를 0으로 만듭니다.
+			clearInterval(firstTimer);
+		}
+		window.scrollTo(0, t);
+	}, 10); // 10ms 간격으로 진행
+
+	window.addEventListener("scroll", function(){
+		if(firstFlag == false) return;
+		// if(!firstFlag) return;
+
+		t=window.pageYOffset;
+		// console.log(t);
+		if(t < offsetY[1]){ // 900 보다 작다
+			n=0;
+		}
+		else if(t >= offsetY[1] && t < offsetY[2]){ // 900보다 크고 1800보다 작다
+			n=1;
+		}
+		else{ // 1800보다 크다
+			n=2;
+		}
+		// console.log(n);
+
+		for(var j=0; j<contents.length; j++){
+			if(j == n){
+				contents[j].classList.add("active");
+			}
+			else{
+				contents[j].classList.remove("active");
+			}
+		};
+	});
+});
+</script>
+</head>
+
+<body>
+<div class="wrapper">
+	<header id="header">
+		<div class="type1">type1</div>
+		<div class="type2">type2</div>
+		<div class="type3">type3</div>
+	</header>
+	<section id="page1">
+		<div class="type1">type1</div>
+		<div class="type2">type2</div>
+		<div class="type3">type3</div>
+	</section>
+	<section id="page2">
+		<div class="type1">type1</div>
+		<div class="type2">type2</div>
+		<div class="type3">type3</div>
+	</section>
+</div>
+</body>
+</html>

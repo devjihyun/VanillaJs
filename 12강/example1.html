@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>basic :: javascript example</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic">
+<style>
+body {
+	margin: 20px;
+	padding: 20px;
+	line-height: 1;
+	font-family: "Open Sans", sans-serif;
+	font-size: 1em;
+	background-color: #f1f1f1;
+	color: #555;
+}
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.title {
+	margin: 0;
+	margin-bottom: 35px;
+	padding: 0;
+	font-size: 1.5em;
+	font-weight: 300;
+	color: #555;
+}
+.wrapper{display: flex;justify-content: space-between;}
+.container {
+	margin-top: 35px;
+	min-width: 440px;
+}
+.controller {
+	padding-top: 20px;
+}
+.controller li {
+	display: inline-block;
+	margin-left: 8px;
+}
+.controller li:first-child {
+	margin-left: 0;
+}
+.controller li a {
+	display: block;
+	width: 20px;
+	height: 20px;
+	background-color: #fff;
+	border-radius: 20px;
+	transition: all 0.3s;
+}
+.controller li.on a {
+	width: 50px;
+	background-color: #8ac007;
+}
+</style>
+<script>
+window.addEventListener("load", function(){
+	var liList=document.querySelectorAll(".controller li");
+	
+	for(var i=0; i<liList.length; i++){
+		liList[i].index=i;
+		var n=0;
+
+		liList[i].addEventListener("click", function(e){
+			e.preventDefault(); // 이벤트를 브라우저로 전달하지 않습니다.
+			n=e.currentTarget.index;
+			// console.log("n : "+n);
+
+			for(var j=0; j<liList.length; j++) {
+				if(j == n){
+					liList[j].classList.add("on");
+			}
+			else {
+				liList[j].classList.remove("on");
+				}
+			}
+		});
+	}
+});
+</script>
+</head>
+
+<body>
+<h1 class="title">basic :: javascript example</h1>
+<div class="wrapper">
+	<div class="container">
+		<ul class="controller">
+			<li class="on"><a href=""></a></li>
+			<li><a href=""></a></li>
+			<li><a href=""></a></li>
+			<li><a href=""></a></li>
+			<li><a href=""></a></li>
+			<li><a href=""></a></li>
+		</ul>
+	</div>
+	<div>
+		<span>학습내용 - on 클래스 붙여서 메뉴 활성화 시키기</span>
+		<pre>
+&lt;script&gt;
+window.addEventListener("load", function(){
+	var liList=document.querySelectorAll(".controller li");
+	
+	for(var i=0; i&lt;liList.length; i++){
+		liList[i].index=i;
+		var n=0;
+
+		liList[i].addEventListener("click", function(e){
+			e.preventDefault(); // 이벤트를 브라우저로 전달하지 않습니다.
+			n=e.currentTarget.index;
+			// console.log("n : "+n);
+
+			for(var j=0; j&lt;liList.length; j++) {
+				if(j == n){
+					liList[j].classList.add("on");
+			}
+			else {
+				liList[j].classList.remove("on");
+				}
+			}
+		});
+	}
+});
+&lt;/script&gt;
+		</pre>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>basic :: JavaScript example</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic">
+<!-- 100 / 300 / 400 / 500 / 700 / 900 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css">
+<link rel="stylesheet" href="css/reset.css">
+<style>
+body {
+	margin: 20px;
+	padding: 20px;
+	font-family: "Open Sans", "Noto Sans KR", sans-serif;
+	font-size: 1em;
+	font-weight: 400;
+	background-color: #f1f1f1;
+}
+.wrapper{
+	display: flex;
+	justify-content: space-between;
+}
+.clearfix:before, .clearfix:after {
+	content: "";
+	display: block;
+}
+.clearfix:after {
+	clear: both;
+}
+.title {
+	margin: 0;
+	margin-bottom: 35px;
+	padding: 0;
+	font-size: 1.5em;
+	font-weight: 300;
+	color: #555;
+}
+.container {
+	margin-top: 35px;
+	text-align: center;
+}
+.container li {
+	display: inline-block;
+}
+.container li a {
+	display: block;
+	padding: 10px 20px;
+}
+.container li a:focus {
+	outline: 2px solid #09f;
+}
+</style>
+<script>
+window.addEventListener("load", function(){
+	var liList=document.querySelectorAll(".container li");
+	var listFirstA=liList[0].children[0];
+	// console.log(listFirstA);
+
+	var indexArray=new Array(4, 3, 2, 1);
+
+	for(var i=0; i<liList.length; i++){
+		liList[i].children[0].setAttribute("tabindex", indexArray[i]);
+	}
+
+	liList[3].children[0].focus();
+});
+</script>
+</head>
+
+<body>
+<h1 class="title">basic :: JavaScript example</h1>
+<div class="wrapper">
+	<div class="container">
+		<!-- tabindex를 테스트해 봅시다. 
+	
+		<ul>
+			<li><a href="#" tabindex="1" class="first">link1</a></li>
+			<li><a href="#" tabindex="4" class="second">link2</a></li>
+			<li><a href="#" tabindex="2" class="third">link3</a></li>
+			<li><a href="#" tabindex="3" class="forth">link4</a></li>
+		</ul>
+		-->
+	
+		<ul>
+			<li><a href="#" class="first">link1</a></li>
+			<li><a href="#" class="second">link2</a></li>
+			<li><a href="#" class="third">link3</a></li>
+			<li><a href="#" class="forth">link4</a></li>
+		</ul>
+	</div>
+	<div>
+		<span>학습내용 - 노드 포커스</span>
+		<pre>
+&lt;script&gt;&gt;
+window.addEventListener("load", function(){
+	var liList=document.querySelectorAll(".container li");
+	var listFirstA=liList[0].children[0];
+	// console.log(listFirstA);
+
+	var indexArray=new Array(4, 3, 2, 1);
+
+	for(var i=0; i&lt;liList.length; i++){
+		liList[i].children[0].setAttribute("tabindex", indexArray[i]);
+	}
+
+	liList[3].children[0].focus();
+});
+&lt;/script&gt;			
+		</pre>
+	</div>
+</div>
+</body>
+</html>

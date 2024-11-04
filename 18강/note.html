@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <pre>
+&lt;script&gt;
+window.addEventListener("load", function(){
+    var h; // 윈도우의 높이에 관련된 변수입니다.
+    var n=0; // 메뉴 번호에 관련된 변수입니다.
+    var target=0; // 목표 위치에 관련된 변수입니다.
+    var yOffset=0; // 현재 위치에 관련된 추가 변수입니다.
+    var timer=0; // 현재 움직임에 관련된 추가 타이머 변수입니다.
+    var moving=false; // 현재 움직임에 관련된 추가 변수입니다.
+    var menuList=document.querySelectorAll("#GNB li");
+    var pageList=document.querySelectorAll(".page");
+    var body=document.body;
+
+    setTimeout(function(){
+        menuList[0].classList.add("active");
+        yOffset=window.pageYOffset;
+        traget=0;
+        moving=true; // 화면 이동 움직임을 시작합니다.
+        moveCategory();
+    }, 150);
+
+    function moveCategory(){
+        timer=setInterval(function(){
+            if(target &lt; yOffset){ // 위로 움직입니다.
+                if(Math.abs(target-yOffset) &gt; 5){
+                    yOffset-=5;
+                }
+                else{
+                    yOffset=target;
+                    moving=false;
+                    clearInterval(timer);
+
+                    for(var j=0; j&lt;menuList.length; j++){
+                        if(j != n){
+                            menuList[j].classList.remove("active");
+                        }
+                        else{
+                            menuList[j].classList.add("active");
+                        }
+                    }
+                }
+            }
+            else{ // 아래로 움직입니다.
+                if(Math.abs(target-yOffset) &gt; 5){
+                    yOffset+=5;
+                }
+                else{
+                    yOffset=target;
+                    moving=false;
+                    clearInterval(timer);
+
+                    for(var j=0; j&lt;menuList.length; j++){
+                        if(j != n){
+                            menuList[j].classList.remove("active");
+                        }
+                        else{
+                            menuList[j].classList.add("active");
+                        }
+                    }
+                }
+            }
+            window.scrollTo(0, yOffset);
+        }, 1);
+    }
+
+    // 브라우저의 높이를 카테고리 높이로 지정
+    function init(){
+        h=window.innerHeight;
+        for(var i=0; i&lt;pageList.length; i++){
+            pageList[i].style.height=h+"px";
+        }
+    }
+    init();
+
+    window.addEventListener("resize", init);
+
+    for(var i=0; i&lt;menuList.length; i++){
+        menuList[i].index=i;
+
+        menuList[i].addEventListener("click", function(e){
+            if(moving) return;
+
+            e.preventDefault();
+            n=e.currentTarget.index;
+            yOffset=window.pageYOffset;
+            target=n*h;
+            moving=true;
+            moveCategory();
+        });
+    }
+
+    document.addEventListener("scroll", function(e){
+        yOffset=window.pageYOffset;
+
+        if(yOffset &lt; pageList[1].offsetTop){
+            n=0;
+        }
+        else if(yOffset &gt;= pageList[1].offsetTop && yOffset &lt; pageList[2].offsetTop){
+            n=1;
+        }
+        else if(yOffset &gt;= pageList[2].offsetTop && yOffset &lt; pageList[3].offsetTop){
+            n=2;
+        }
+        else if(yOffset &gt;= pageList[3].offsetTop && yOffset &lt; pageList[4].offsetTop){
+            n=3;
+        }
+        else if(yOffset &gt;= pageList[4].offsetTop && yOffset &lt; pageList[5].offsetTop){
+            n=4;
+        }
+        else{
+            n=5;
+        }
+        for(var j=0; j&lt;menuList.length; j++){
+            if(j != n){
+                menuList[j].classList.remove("active");
+            }
+            else{
+                menuList[j].classList.add("active");
+            }
+        }
+    });
+
+});
+&lt;/script&gt;       
+    </pre>
+</body>
+</html>

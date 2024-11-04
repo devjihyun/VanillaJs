@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span>example1</span>
+    <pre>
+&lt;script&gt;&gt;
+window.addEventListener("load", function(){
+    var t=window.pageXOffset;
+    // console.log("t :", t);
+    var targetY=0; // 윈도우의 위치 이동 정보 변수
+    var wrapper=document.querySelector(".wrapper");
+    var contents=wrapper.children;
+    var offsetY=new Array(); // 카테고리의 높이 정보 배열
+    var n=0; // 카테고리의 위치 번호 변수(0, 1, 2, 3)
+    var firstFlag=false; // 처음 동작인지를 확인하는 변수
+
+    for(var i=0; i&lt;contents.length; i++){
+        offsetY.push(contents[i].offsetTop);
+    }
+    // console.log("offsetY: ", offsetY); //0, 900, 1800
+    
+    var firstTimer=setInterval(function(){
+        if(Math.abs(t-targetY) &gt; 10){
+            t-=10;
+        }
+        else{
+            firstFlag=true;
+            t=targetY; // 윈도우의 초기 좌표를 0으로 만듭니다.
+            clearInterval(firstTimer);
+        }
+        window.scrollTo(0, t);
+    }, 10); // 10ms 간격으로 진행
+
+    window.addEventListener("scroll", function(){
+        if(firstFlag == false) return;
+        // if(!firstFlag) return;
+
+        t=window.pageYOffset;
+        // console.log(t);
+        if(t &lt; offsetY[1]){ // 900 보다 작다
+            n=0;
+        }
+        else if(t &gt;= offsetY[1] && t &lt; offsetY[2]){ // 900보다 크고 1800보다 작다
+            n=1;
+        }
+        else{ // 1800보다 크다
+            n=2;
+        }
+        // console.log(n);
+
+        for(var j=0; j&lt;contents.length; j++){
+            if(j == n){
+                contents[j].classList.add("active");
+            }
+            else{
+                contents[j].classList.remove("active");
+            }
+        };
+    });
+});
+&lt;/script&gt;
+    </pre>
+    <span>example2</span>
+    <pre>
+&lt;script&gt;
+window.addEventListener("load", function(){
+    // mousewheel 이벤트, keydown 이벤트
+    // var body=document.getElementsByTagName("body")[0];
+    var body=document.body;
+    var ball=document.querySelector(".ball");
+    var num=0;
+    var moving=false;
+    var targetX=0;
+    var currentX=0;
+
+    body.addEventListener("wheel", function(e){
+        if(moving) return;
+
+        // console.log("mousewheel event!!");
+        // console.log(e);
+        var delta=e.wheelDeltaY;
+
+        if(delta &gt; 0){
+            // console.log("up"); 왼쪽으로 이동됩니다.
+            if(num &gt; 0){
+                num-=1;
+            }
+        }
+        else{
+            // console.log("down"); 오른쪽으로 이동됩니다.
+            if(num &lt; 20){
+                num+=1;
+            }
+        }
+        moving=true; // 휠 동작 구현의 시작입니다.
+        targetX=100*num;
+        moveCategory();
+    });
+
+    body.addEventListener("keydown", function(e){
+        // console.log("e.keyCode : "+e.keyCode);
+        if(moving) return;
+
+        if(e.keyCode == 38){
+            // console.log("up");
+            if(num &gt; 0){
+                num-=1;
+            }
+        }
+        else if(e.keyCode == 40){
+            // console.log("down");
+            if(num &lt; 20){
+                num+=1;
+            }
+        }
+
+        // console.log("num : "+num);
+        moving=true;
+        targetX=100*num;
+        moveCategory();
+    });
+
+    function moveCategory(){
+        var aniTimer=setInterval(function(){
+            if(targetX &gt; currentX){
+                if(Math.abs(targetX-currentX) &gt; 5){
+                    currentX+=5;
+                }
+                else{
+                    currentX=targetX;
+                    clearInterval(aniTimer);
+                    moving=false;
+                }
+            }
+            else{
+                if(Math.abs(targetX-currentX) &gt; 5){
+                    currentX-=5;
+                }
+                else{
+                    currentX=targetX;
+                    clearInterval(aniTimer);
+                    moving=false;
+                }
+            }
+            ball.style.marginLeft=currentX+"px";
+        }, 5);
+    }
+});
+&lt;/script&gt;
+    </pre>
+</body>
+</html>
+
