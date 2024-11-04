@@ -6,6 +6,11 @@
   </head>
   <body>
     <style>
+      body {
+        position: relative;
+        width: 960px;
+        margin: 0 auto;
+      }
       table {
         border-collapse: collapse;
       }
@@ -30,8 +35,6 @@
         text-align: center;
       }
       .study-table {
-        max-width: 1440px;
-        margin: 0 auto;
         border-top: 1px solid #999;
       }
       .study-table table {
@@ -88,7 +91,6 @@
         cursor: pointer;
       }
     </style>
-    <button id="loadImageBtn">수료증</button>
 
     <h1 class="study-index-tit">
       React로 가기 위한 첫 걸음, Vanilla JS 기초_학습 노트
@@ -400,13 +402,15 @@
         </tbody>
       </table>
     </div>
+    <button id="loadImageBtn">수료증</button>
+
     <script>
       document
         .getElementById("loadImageBtn")
         .addEventListener("click", openImageInNewTab);
 
       function openImageInNewTab() {
-        const imageUrl = "/certificates-multicampus.png";
+        const imageUrl = "certificates-multicampus.png";
         window.open(imageUrl, "_blank");
       }
     </script>
